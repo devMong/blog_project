@@ -29,7 +29,7 @@ public class Reply {
 	
 	@ManyToOne // Many = Reply | One = Board => 여러개의 답변은 하나의 게시글에 존재 할 수 있다.
 	@JoinColumn(name = "boardId")
-	private Board Board;
+	private Board board;
 	
 	@ManyToOne
 	@JoinColumn(name = "userId")

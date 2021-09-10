@@ -27,12 +27,16 @@ public class HttpControllerTest {
 		return "lombok test 완료";
 	}
 	
-	// http://localhost:8089/http/get => select
+	// http://localhost:8092/http/get => select
 	// 인터넷 브라우저 요청은 무조건 get 요청밖에 안된다.
 	@GetMapping("/http/get")
-	public String getTest(Member m) {
-		return "get 요청 : " + m.getId() + ", " + m.getUsername() + ", " + m.getPassword() + ", " + m.getEmail();
+	public String getTest() {
+		return "get 요청";
 	}
+//	public String getTest(Member m) {
+//		return "get 요청 : " + m.getId() + ", " + m.getUsername() + ", " + m.getPassword() + ", " + m.getEmail();
+//	}
+	
 	
 	// http://localhost:8089/http/post => insert
 	@PostMapping("/http/post") // text/plain, application/JSON
