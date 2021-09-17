@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,6 +13,7 @@ import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +26,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
+//@DynamicInsert // insert시 에 null인 필드를 제거해준다.
 //ORM -> Java(다른 언어도 포함) Object를 테이블로 매핑해주는 것이다.
 //Users 클래스가 Oracle에 테이블이 생성된다.
 @SequenceGenerator(
@@ -40,7 +44,7 @@ public class Users {
 	
 	private int id; // 시퀀스
 	
-	@Column(nullable = false, length = 30)
+	@Column(nullable = false, length = 30, unique=true)
 	private String username;
 	
 	@Column(nullable = false, length = 100) 
@@ -50,10 +54,14 @@ public class Users {
 	@Column(nullable = false, length = 50)
 	private String email;
 	
-	@ColumnDefault("'user'") // 컬럼의 기본값을 'user'
-	private String role; // Enum을 쓰는 게 좋음 => 어떤 데이터의 도메인을 생성 
+	// @ColumDefault("'user'")
+	// DB는 RoleType이라는 게 없다.
+	@Enumerated(EnumType.STRING)
+	private RoleType role; // Enum을 쓰는 게 좋음 => 어떤 데이터의 도메인을 생성 
 	// admin, user, manager .. 이러한 권한을 줘서 각자가 맡은 행위에 제한을 둔다.
 	
 	@CreationTimestamp // 데이터가 update 및 insert 할 때 시간이 현재 시간으로 자동 입력
 	private Timestamp createDate;
+	
+	
 }
